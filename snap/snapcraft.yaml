@@ -39,6 +39,7 @@ apps:
       LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$LD_LIBRARY_PATH
     command: spt
     plugs:
+      - desktop
       - network
       - network-bind
       - pulseaudio
