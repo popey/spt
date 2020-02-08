@@ -15,6 +15,17 @@ parts:
     build-packages:
       - libssl-dev
       - pkg-config
+      - libxcb1-dev
+      - libxcb-render0-dev
+      - libxcb-shape0-dev
+      - libxcb-xfixes0-dev
+    stage-packages:
+      - libxau6
+      - libxcb-render0
+      - libxcb-shape0
+      - libxcb-xfixes0
+      - libxcb1
+      - libxdmcp6
     override-pull: |
       snapcraftctl pull
       last_committed_tag="$(git describe --tags --abbrev=0)"
@@ -43,3 +54,4 @@ apps:
       - network
       - network-bind
       - pulseaudio
+
