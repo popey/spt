@@ -1,7 +1,7 @@
 name: spt
 base: core18
 version: latest
-version-script: git -C parts/spt/build describe --tags | sed 's/v//'
+version-script: git -C parts/spotify-tui/build describe --tags | sed 's/v//'
 summary: Spotify TUI
 description: |
   Spotify for the terminal written in Rust
