@@ -1,6 +1,7 @@
 name: spt
 base: core18
-adopt-info: spotify-tui
+version: latest
+version-script: git -C parts/spt/build describe --tags | sed 's/v//'
 summary: Spotify TUI
 description: |
   Spotify for the terminal written in Rust
@@ -29,20 +30,15 @@ parts:
     override-pull: |
       snapcraftctl pull
       last_committed_tag="$(git describe --tags --abbrev=0)"
-      echo $last_committed_tag
+      last_committed_tag_ver="$(echo ${last_committed_tag} | sed 's/v//')"
       last_released_tag="$(snap info $SNAPCRAFT_PROJECT_NAME | awk '$1 == "latest/beta:" { print $2 }')"
-      echo $last_released_tag
       # If the latest tag from the upstream project has not been released to
       # beta, build that tag instead of master.
-      if [ "${last_committed_tag}" != "${last_released_tag}" ]; then
-        VERSION=${last_committed_tag}
+      if [ "${last_committed_tag_ver}" != "${last_released_tag}" ]; then
         git fetch
-        git checkout "${VERSION}"
-      else
-        VERSION=$(git rev-parse --short HEAD)
+        git checkout "${last_committed_tag}"
       fi
-      echo "Setting version to $VERSION"
-      snapcraftctl set-version "${VERSION}"
+      snapcraftctl build
 
 apps:
   spt:
